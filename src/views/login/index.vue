@@ -15,13 +15,17 @@
           <el-input v-model="loginForm.code" placeholder="验证码" class="check"></el-input>
           <el-button plain class="send">发送验证码</el-button>
         </el-form-item>
-        <el-checkbox prop="checked" v-model="loginForm.checked" class="item">
-          我已阅读并同意
-          <a href="#">用户协议</a>
-          和
-          <a href="#">隐私条款</a>
-        </el-checkbox>
-        <el-button @click="login" type="primary" class="btn">登录</el-button>
+        <el-form-item prop="checked" class="item">
+          <el-checkbox v-model="loginForm.checked">
+            我已阅读并同意
+            <a href="#">用户协议</a>
+            和
+            <a href="#">隐私条款</a>
+          </el-checkbox>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="login" type="primary" class="btn">登录</el-button>
+        </el-form-item>
       </el-form>
     </el-card>
   </div>
@@ -50,8 +54,8 @@ export default {
           { pattern: /^\d{6}$/, message: '验证码有误' }
         ],
         // 复选框是否勾选
+        // 自定义校验：value为true执行callback(),false执行callback(new Error())
         checked: [
-          // 自定义校验：value为true执行callback(),false执行callback(new Error())
           {
             validator: function (rule, value, callback) {
               value
@@ -73,9 +77,16 @@ export default {
           method: 'post'
         })
           .then(result => {
+            // 前端持久化 将token存于 本地缓存
             console.log(result.data)
+            window.localStorage.setItem('user-token', result.data.data.token)
+            // 验证成功=>跳转到主页 (编程式导航)
+            this.$router.push('/')
           })
-          .catch(() => {})
+          .catch(() => {
+            // 验证错误 弹出提示框
+            this.$message.error('手机号或验证码错误')
+          })
       })
     }
   }
