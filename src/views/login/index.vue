@@ -4,8 +4,8 @@
       <div class="logo">
         <img src="../../assets/logo_index.png" alt />
       </div>
-      <!-- 绑定表单数据对象 -->
-      <el-form :model="loginForm" :rules="loginRules">
+      <!-- 绑定表单数据对象  绑定表单验证规则 获取form组件节点-->
+      <el-form :model="loginForm" :rules="loginRules" ref="loginForm">
         <!-- prop属性匹配对应字段名 -->
         <el-form-item prop="mobile" class="item">
           <!--  v-model双向绑定数据 -->
@@ -15,13 +15,13 @@
           <el-input v-model="loginForm.code" placeholder="验证码" class="check"></el-input>
           <el-button plain class="send">发送验证码</el-button>
         </el-form-item>
-        <el-checkbox prop="checked" v-model="checked" class="item">
+        <el-checkbox prop="checked" v-model="loginForm.checked" class="item">
           我已阅读并同意
           <a href="#">用户协议</a>
           和
           <a href="#">隐私条款</a>
         </el-checkbox>
-        <el-button type="primary" class="btn">登录</el-button>
+        <el-button @click="login" type="primary" class="btn">登录</el-button>
       </el-form>
     </el-card>
   </div>
@@ -61,6 +61,13 @@ export default {
           }
         ]
       }
+    }
+  },
+  methods: {
+    login () {
+      this.$refs.loginForm.validate().then(() => {
+        // alert(1)
+      })
     }
   }
 }
