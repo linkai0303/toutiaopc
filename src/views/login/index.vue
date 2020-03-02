@@ -66,7 +66,16 @@ export default {
   methods: {
     login () {
       this.$refs.loginForm.validate().then(() => {
-        // alert(1)
+        // 调用接口,
+        this.$axios({
+          url: '/authorizations',
+          data: this.loginForm,
+          method: 'post'
+        })
+          .then(result => {
+            console.log(result.data)
+          })
+          .catch(() => {})
       })
     }
   }
