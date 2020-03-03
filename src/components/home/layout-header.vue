@@ -63,20 +63,22 @@ export default {
 
 <style lang='less' scoped>
 .layout-header {
-  height: 55px;
+  height: 54px;
   .left {
     font-size: 20px;
-    line-height: 55px;
+    line-height: 58px;
+    color: rgb(143, 143, 143)
   }
   .right {
     img {
-      width: 55px;
-      height: 55px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      margin-right: 5px;
+      margin-right: 12px;
     }
     .username{
         cursor: pointer;
+        color: rgb(204, 204, 204)
     }
   }
 }

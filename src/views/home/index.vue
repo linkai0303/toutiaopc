@@ -2,19 +2,18 @@
   <!-- 外层容器 -->
   <el-container>
     <!-- 左侧容器 -->
-    <el-aside>
+    <el-aside  style="width:220px">
       <layout-aside></layout-aside>
     </el-aside>
     <!-- 右侧外层容器 -->
     <el-container>
       <!-- 顶部容器 -->
-      <el-header>
+      <el-header style="background-color: #222">
         <layout-header></layout-header>
       </el-header>
       <!-- 主体容器 -->
-      <el-main>
+      <el-main style="padding:0">
         <!-- 二级路由容器 -->
-        我是二级路由容器
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -26,4 +25,5 @@ export default {}
 </script>
 
 <style>
+
 </style>

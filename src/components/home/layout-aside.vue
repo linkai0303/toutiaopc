@@ -4,7 +4,7 @@
       <img src="@/assets/logo_admin.png" alt />
     </div>
     <!-- 开启路由模式 -->
-    <el-menu class="menu" router background-color="#323745" text-color="#adafb5" >
+    <el-menu class="menu" router background-color="#252525" text-color="#adafb5" >
         <!-- 配置index属性作为跳转路径 -->
       <el-menu-item index="/home">
         <i class="el-icon-s-home"></i>
@@ -46,13 +46,13 @@ export default {}
 .layout-aside {
   height: 100vh;
   width: 220px;
-  background-color: #323745;
+  background-color: #252525;
   .title {
-    padding: 12px 0;
+    padding: 11px 0;
     text-align: center;
     background-color: #2e2f32;
     img {
-      height: 30px;
+      height: 34px;
     }
   }
   .menu {
