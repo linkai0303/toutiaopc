@@ -22,15 +22,8 @@
 </template>
 
 <script>
-// 引入侧边栏组件
-import LayoutAside from '@/components/home/layout-aside'
-import LayoutHeader from '@/components/home/layout-header'
-
 export default {
-  components: {
-    'layout-aside': LayoutAside,
-    'layout-header': LayoutHeader
-  }
+
 }
 </script>
 
