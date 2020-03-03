@@ -8,7 +8,9 @@
     <!-- 右侧外层容器 -->
     <el-container>
       <!-- 顶部容器 -->
-      <el-header>我是顶部容器</el-header>
+      <el-header>
+        <layout-header></layout-header>
+      </el-header>
       <!-- 主体容器 -->
       <el-main>
         <!-- 二级路由容器 -->
@@ -22,10 +24,12 @@
 <script>
 // 引入侧边栏组件
 import LayoutAside from '@/components/home/layout-aside'
+import LayoutHeader from '@/components/home/layout-header'
 
 export default {
   components: {
-    'layout-aside': LayoutAside
+    'layout-aside': LayoutAside,
+    'layout-header': LayoutHeader
   }
 }
 </script>
