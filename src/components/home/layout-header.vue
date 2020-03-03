@@ -70,8 +70,8 @@ export default {
   }
   .right {
     img {
-      width: 45px;
-      height: 45px;
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
       margin-right: 5px;
     }
