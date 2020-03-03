@@ -8,13 +8,15 @@
       <el-row type="flex" justify="end" align="middle">
           <!-- 双向绑定src -->
         <img :src="userInfo.photo" alt />
-        <el-dropdown trigger="click">
+        <!-- 点击菜单选项触发command事件 -->
+        <el-dropdown trigger="click" @command="clickMenu">
             <!--双向绑定用户名  -->
-          <span>{{userInfo.name}}</span>
+          <span class="username">{{userInfo.name}}</span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人信息</el-dropdown-item>
-            <el-dropdown-item>git地址</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+              <!-- 给下拉菜单选项添加command属性 -->
+            <el-dropdown-item command="info">个人信息</el-dropdown-item>
+            <el-dropdown-item command="git">git地址</el-dropdown-item>
+            <el-dropdown-item command="logout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-row>
@@ -27,6 +29,18 @@ export default {
   data () {
     return {
       userInfo: {} // 用来储存用户个人信息
+    }
+  },
+  methods: {
+    clickMenu (command) {
+      if (command === 'info') {
+
+      } else if (command === 'git') {
+        window.location.href = 'https://github.com/linkai0303'
+      } else {
+        window.localStorage.removeItem('user-token')// 删除token缓存
+        this.$router.push('/login')// 回到登录页
+      }
     }
   },
   created () {
@@ -43,6 +57,7 @@ export default {
       this.userInfo = result.data.data
     })
   }
+
 }
 </script>
 
@@ -55,10 +70,13 @@ export default {
   }
   .right {
     img {
-      width: 60px;
-      height: 60px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       margin-right: 5px;
+    }
+    .username{
+        cursor: pointer;
     }
   }
 }
