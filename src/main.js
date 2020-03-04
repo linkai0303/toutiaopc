@@ -5,7 +5,8 @@ import ElementUI from 'element-ui' // 引入UI
 import 'element-ui/lib/theme-chalk/index.css' // 引入样式
 import '@/styles/index.less'// 引入样式
 import axios from 'axios'// 引入axios
-import Components from '@/components'
+import Components from '@/components'// 引入组件
+import '@/permission'// 引入权限模块
 
 Vue.config.productionTip = false
 
