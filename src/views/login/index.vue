@@ -39,7 +39,7 @@ export default {
       loginForm: {
         mobile: '',
         code: '',
-        checked: false
+        checked: true
       },
       // 配置表单验证规则
       loginRules: {

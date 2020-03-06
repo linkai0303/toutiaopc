@@ -12,6 +12,7 @@ export default {
     .second_home{
         width: 100%;
         height: calc(100vh - 60px);
-        background-image: url('http://img0.imgtn.bdimg.com/it/u=3464148730,3739905685&fm=214&gp=0.jpg')
+        background-image: url(../../assets/bj.jpg);
+        background-size: cover
     }
 </style>

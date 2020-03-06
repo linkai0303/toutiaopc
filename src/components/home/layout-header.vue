@@ -70,9 +70,10 @@ export default {
     color: rgb(143, 143, 143)
   }
   .right {
+    margin-top: 10px;
     img {
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       margin-right: 12px;
     }
