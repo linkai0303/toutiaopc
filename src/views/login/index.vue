@@ -106,6 +106,8 @@ export default {
   .box-card {
     width: 577px;
     height: 357px;
+    background-color: rgba(71, 144, 212, 0.2);
+    border: 1px solid rgba(181, 208, 233, 0.3);
     .logo {
       text-align: center;
       img {
