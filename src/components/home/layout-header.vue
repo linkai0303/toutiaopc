@@ -54,7 +54,7 @@ export default {
       }
     }).then(result => {
       // 将获取到的用户信息赋值给data中的对象
-      this.userInfo = result.data.data
+      this.userInfo = result.data
     })
   }
 

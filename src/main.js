@@ -4,9 +4,9 @@ import router from './router'
 import ElementUI from 'element-ui' // 引入UI
 import 'element-ui/lib/theme-chalk/index.css' // 引入样式
 import '@/styles/index.less'// 引入样式
-import axios from '@/utils/request.js'// 引入axios
-import Components from '@/components'// 引入组件
-import '@/permission'// 引入权限模块
+import axios from '@/utils/request'// 引入axios
+import Components from '@/components'// 配置请求头默认地址
+import '@/permission'// 引入组件
 
 Vue.config.productionTip = false
 

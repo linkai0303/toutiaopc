@@ -79,7 +79,7 @@ export default {
           .then(result => {
             // 前端持久化 将token存于 本地缓存
             console.log(result.data)
-            window.localStorage.setItem('user-token', result.data.data.token)
+            window.localStorage.setItem('user-token', result.data.token)
             // 验证成功=>跳转到主页 (编程式导航)
             this.$router.push('/')
           })
