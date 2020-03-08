@@ -22,6 +22,9 @@ const routes = [
       }, {
         path: 'comment', // 评论列表地址=>/hoem/comment
         component: () => import('@/views/comment')// 按需加载的方式引入
+      }, {
+        path: 'material', // 素材管理地址
+        component: () => import('@/views/material')
       }
     ]
   }, {
