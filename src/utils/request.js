@@ -3,8 +3,14 @@
 // 配置拦截器
 import axios from 'axios'
 import router from '@/router'// 引入路由实例对象
+import JSONBig from 'json-bigint'// 引入地方处理大数字的包
 
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'// 配置请求头默认地址
+
+// 对axios放回数据进行自定义处理 用json-bigint 代替原来的json
+axios.defaults.transformResponse = [function (data) {
+  return data ? JSONBig.parse(data) : {}
+}]
 
 // 注册请求拦截器
 axios.interceptors.request.use(function (config) {
