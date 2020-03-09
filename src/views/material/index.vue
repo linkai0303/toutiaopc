@@ -70,16 +70,30 @@ export default {
         url: `/user/images/${row.id}`,
         method: 'put',
         data: {
-          collect: !row.is_collected// 收藏或取消收藏根据当前状态取反得到
-        }// body参数
-      }).then(() => {
-        this.getMeterial() // 成功重新加载
-      }).catch(() => {
-        this.$message.error('操作失败') // 提示消息
+          collect: !row.is_collected // 收藏或取消收藏根据当前状态取反得到
+        } // body参数
       })
+        .then(() => {
+          this.getMeterial() // 成功重新加载
+        })
+        .catch(() => {
+          this.$message.error('操作失败') // 提示消息
+        })
     },
     //   删除素材犯法
-    delMaterial (row) {},
+    delMaterial (row) {
+      this.$confirm('您确定要删除此图片吗？', '提示').then(() => {
+        this.$axios({
+          url: `/user/images/${row.id}`,
+          method: 'delete'
+        }).then(() => {
+          this.getMeterial() // 成功重新加载
+        })
+          .catch(() => {
+            this.$message.error('操作失败') // 提示消息
+          })
+      })
+    },
     //   定义一个上传组件的方法
     uploudImg (params) {
       const data = new FormData() // 实例化一个formData
