@@ -4,6 +4,13 @@
     <bread-crumb slot="header">
       <template slot="title">素材管理</template>
     </bread-crumb>
+    <el-row type="flex" justify="end">
+      <!-- 上传组件必须传action属性 -->
+      <el-upload action="" :http-request="uploudImg" :show-file-list="false">
+        <el-button size="small" type="primary">上传素材</el-button>
+      </el-upload>
+    </el-row>
+
     <!-- 放置标签页 v-model所绑定的值就是当前激活的页签 -->
     <el-tabs v-model="activeName" @tab-click="changeTab">
       <el-tab-pane label="全部素材" name="all">
@@ -26,13 +33,14 @@
       </el-tab-pane>
     </el-tabs>
     <el-row type="flex" justify="center" align="middle" style="height:80px">
-        <el-pagination background
-         :total="page.total"
+      <el-pagination
+        background
+        :total="page.total"
         :current-page="page.currentpage"
         :page-size="page.pageSize"
         layout="prev,pager,next"
         @current-change="changePage"
-        ></el-pagination>
+      ></el-pagination>
     </el-row>
   </el-card>
 </template>
@@ -51,10 +59,26 @@ export default {
     }
   },
   methods: {
+    //   定义一个上传组件的方法
+    uploudImg (params) {
+      const data = new FormData()// 实例化一个formData
+      data.append('image', params.file)// 加入文件参数
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data
+      }).then(() => {
+        this.getMeterial()
+      }).catch(() => {
+
+      })
+    },
+    // 页面切换时执行
     changePage (newPage) {
       this.page.currentPage = newPage
       this.getMeterial()
     },
+    // 获取素材数据
     getMeterial () {
       this.$axios({
         url: '/user/images',
@@ -69,6 +93,7 @@ export default {
         this.page.total = result.data.total_count // 将素材总数赋值给当前总数
       })
     },
+    // 标签切换时执行
     changeTab () {
       // 将页码重置为第一页
       this.page.currentPage = 1
