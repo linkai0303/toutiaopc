@@ -15,8 +15,8 @@
     <el-tabs v-model="activeName" @tab-click="changeTab">
       <el-tab-pane label="全部素材" name="all">
         <div class="img-list">
-          <el-card v-for="item in list" :key="item.id" class="img-card">
-            <img :src="item.url" alt />
+          <el-card v-for="(item,index) in list" :key="item.id" class="img-card">
+            <img :src="item.url" @click="selectImg(index)" />
             <el-row class="operate" type="flex" align="middle" justify="space-around">
               <i
                 @click="collectOrCancel(item)"
@@ -30,8 +30,8 @@
       </el-tab-pane>
       <el-tab-pane label="收藏素材" name="collect">
         <div class="img-list">
-          <el-card v-for="item in list" :key="item.id" class="img-card">
-            <img :src="item.url" alt />
+          <el-card v-for="(item,index) in list" :key="item.id" class="img-card">
+            <img :src="item.url" @click="selectImg(index)" />
           </el-card>
         </div>
       </el-tab-pane>
@@ -46,6 +46,16 @@
         @current-change="changePage"
       ></el-pagination>
     </el-row>
+    <!-- 弹层组件 通过visible属性控制显示隐藏  -->
+    <el-dialog @opened="openEnd" :visible="dialogVisible" @close="dialogVisible = false">
+      <!-- 走马灯组件 -->
+      <el-carousel ref="myCarousel" indicator-position="outside" height="400px">
+        <!-- 循环生成当前list图片 -->
+        <el-carousel-item v-for="item in list" :key="item.id">
+          <img :src="item.url" alt style="width:100%;height:100%" />
+        </el-carousel-item>
+      </el-carousel>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -59,10 +69,21 @@ export default {
         currentPage: 1, // 默认加载第一页
         total: 0, // 当前总数
         pageSize: 8 // 每页多少条
-      }
+      },
+      dialogVisible: false, // 控制弹层显示隐藏
+      clickIndex: -1 // 点击的索引
     }
   },
   methods: {
+    //   定义图层打开结束后的方法
+    openEnd () {
+      this.$refs.myCarousel.setActiveItem(this.clickIndex) // 设置当前点击的index
+    },
+    // 点击图片的时候调用
+    selectImg (index) {
+      this.clickIndex = index // 记录索引并赋值
+      this.dialogVisible = true // 打开图层
+    },
     //   收藏或取消方法
     collectOrCancel (row) {
       // 调用收藏或取消接口
@@ -86,9 +107,10 @@ export default {
         this.$axios({
           url: `/user/images/${row.id}`,
           method: 'delete'
-        }).then(() => {
-          this.getMeterial() // 成功重新加载
         })
+          .then(() => {
+            this.getMeterial() // 成功重新加载
+          })
           .catch(() => {
             this.$message.error('操作失败') // 提示消息
           })
