@@ -6,7 +6,7 @@
     </bread-crumb>
     <el-row type="flex" justify="end">
       <!-- 上传组件必须传action属性 -->
-      <el-upload action="" :http-request="uploudImg" :show-file-list="false">
+      <el-upload action :http-request="uploudImg" :show-file-list="false">
         <el-button size="small" type="primary">上传素材</el-button>
       </el-upload>
     </el-row>
@@ -18,8 +18,12 @@
           <el-card v-for="item in list" :key="item.id" class="img-card">
             <img :src="item.url" alt />
             <el-row class="operate" type="flex" align="middle" justify="space-around">
-              <i class="el-icon-star-on"></i>
-              <i class="el-icon-delete-solid"></i>
+              <i
+                @click="collectOrCancel(item)"
+                :style="{color: item.is_collected ? 'red' : 'black'}"
+                class="el-icon-star-on"
+              ></i>
+              <i @click="delMaterial(item)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
         </div>
@@ -54,24 +58,41 @@ export default {
       page: {
         currentPage: 1, // 默认加载第一页
         total: 0, // 当前总数
-        pageSize: 8// 每页多少条
+        pageSize: 8 // 每页多少条
       }
     }
   },
   methods: {
+    //   收藏或取消方法
+    collectOrCancel (row) {
+      // 调用收藏或取消接口
+      this.$axios({
+        url: `/user/images/${row.id}`,
+        method: 'put',
+        data: {
+          collect: !row.is_collected// 收藏或取消收藏根据当前状态取反得到
+        }// body参数
+      }).then(() => {
+        this.getMeterial() // 成功重新加载
+      }).catch(() => {
+        this.$message.error('操作失败') // 提示消息
+      })
+    },
+    //   删除素材犯法
+    delMaterial (row) {},
     //   定义一个上传组件的方法
     uploudImg (params) {
-      const data = new FormData()// 实例化一个formData
-      data.append('image', params.file)// 加入文件参数
+      const data = new FormData() // 实例化一个formData
+      data.append('image', params.file) // 加入文件参数
       this.$axios({
         url: '/user/images',
         method: 'post',
         data
-      }).then(() => {
-        this.getMeterial()
-      }).catch(() => {
-
       })
+        .then(() => {
+          this.getMeterial()
+        })
+        .catch(() => {})
     },
     // 页面切换时执行
     changePage (newPage) {
