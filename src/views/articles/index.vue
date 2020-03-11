@@ -7,7 +7,7 @@
     <el-form style="padding-left:50px">
       <el-form-item label="文章状态 : ">
         <!-- 单选框组 -->
-        <el-radio-group v-model="searchForm.status">
+        <el-radio-group v-model="searchForm.status" @change="changeCondition">
           <el-radio :label="5">全部</el-radio>
           <el-radio :label="0">草稿</el-radio>
           <el-radio :label="1">待审核</el-radio>
@@ -17,14 +17,14 @@
       </el-form-item>
       <el-form-item label="频道类型 : ">
         <!-- 选择器 -->
-        <el-select placeholder="请选择频道" v-model="searchForm.channel_id">
+        <el-select @change="changeCondition" placeholder="请选择频道" v-model="searchForm.channel_id">
           <!-- 下拉选项组件 label=>显示值 value=>绑定值 -->
           <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="日期范围 : ">
         <!-- 日期范围选择组件 -->
-        <el-date-picker type="daterange" v-model="searchForm.dateRange"></el-date-picker>
+        <el-date-picker @change="changeCondition" type="daterange" value-format="yyyy-MM-dd" v-model="searchForm.dateRange"></el-date-picker>
       </el-form-item>
     </el-form>
     <!-- -------------------------文章主体结构 ---------------------------------->
@@ -72,7 +72,7 @@ export default {
   },
   //   专门处理 显示格式
   filters: {
-  // 文章状态过滤器:0-草稿;1-待审核;2-审核通过;3-审核失败
+    // 文章状态过滤器:0-草稿;1-待审核;2-审核通过;3-审核失败
     filterStatus (value) {
       switch (value) {
         case 0:
@@ -100,10 +100,26 @@ export default {
     }
   },
   methods: {
+    // 条件改变事件方法
+    changeCondition () {
+      // 组装筛选的条件params
+      const params = {
+        // 文章状态
+        status: this.searchForm.status === 5 ? null : this.searchForm.status,
+        // 表单数据
+        channel_id: this.searchForm.channel_id,
+        // 开始时间
+        begin_pubdate: this.searchForm.dateRange ? this.searchForm.dateRange[0] : null,
+        // 结束时间
+        end_pubdate: this.searchForm.dateRange ? this.searchForm.dateRange[1] : null
+      }
+      this.getArticles(params) // 调用获取文章列表方法并传入参数
+    },
     //   获取文章列表
-    getArticles () {
+    getArticles (params) {
       this.$axios({
-        url: '/articles'
+        url: '/articles',
+        params
       }).then(result => {
         this.list = result.data.results
       })
