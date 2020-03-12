@@ -28,6 +28,9 @@ const routes = [
       }, {
         path: 'articles', // 内容列表地址
         component: () => import('@/views/articles')
+      }, {
+        path: 'publish', // 发布文章地址
+        component: () => import('@/views/publish')
       }
     ]
   }, {
